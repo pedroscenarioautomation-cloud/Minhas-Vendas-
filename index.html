@@ -9,71 +9,47 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
 <style>
   :root {
-    --bg: #F7F5F2;
-    --surface: #FFFFFF;
-    --surface2: #F0EDE8;
-    --surface3: #E8E4DE;
-    --border: #DDD9D2;
-    --border2: #C8C3BB;
-    --text: #1A1816;
-    --text2: #6B6660;
-    --text3: #9C9690;
-    --green: #1A7A5E;
-    --green-bg: #E8F5F0;
-    --green-light: #D0EDE3;
-    --amber: #A06020;
-    --amber-bg: #FDF3E3;
-    --red: #9B2626;
-    --red-bg: #FCEAEA;
+    --bg: #F7F5F2; --surface: #FFFFFF; --surface2: #F0EDE8; --surface3: #E8E4DE;
+    --border: #DDD9D2; --border2: #C8C3BB;
+    --text: #1A1816; --text2: #6B6660; --text3: #9C9690;
+    --green: #1A7A5E; --green-bg: #E8F5F0; --green-light: #D0EDE3;
+    --amber: #A06020; --amber-bg: #FDF3E3;
+    --red: #9B2626; --red-bg: #FCEAEA;
     --accent: #2D5BE3;
-    --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 14px;
-    --radius-xl: 18px;
+    --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px; --radius-xl: 18px;
     --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
     --shadow-lg: 0 4px 20px rgba(0,0,0,.1);
-    --font: 'DM Sans', sans-serif;
-    --mono: 'DM Mono', monospace;
+    --font: 'DM Sans', sans-serif; --mono: 'DM Mono', monospace;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
-
-  /* ── Layout ── */
   .app { max-width: 720px; margin: 0 auto; padding: 24px 20px 60px; }
 
-  /* ── Topbar ── */
   .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
   .logo { display: flex; align-items: center; gap: 10px; }
   .logo-icon { width: 36px; height: 36px; background: var(--text); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; }
   .logo-icon i { color: #fff; font-size: 18px; }
   .logo-text { font-size: 16px; font-weight: 600; letter-spacing: -.02em; }
   .logo-sub { font-size: 12px; color: var(--text3); margin-top: 1px; }
-
   .nav { display: flex; gap: 2px; background: var(--surface3); border-radius: var(--radius-md); padding: 3px; }
   .nav-btn { padding: 7px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; background: transparent; color: var(--text2); font-family: var(--font); display: flex; align-items: center; gap: 5px; transition: all .15s; }
   .nav-btn.active { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
   .nav-btn:hover:not(.active) { color: var(--text); }
 
-  /* ── Stats ── */
   .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 28px; }
   .stat { background: var(--surface); border-radius: var(--radius-lg); padding: 14px 16px; box-shadow: var(--shadow); }
   .stat-label { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 5px; }
   .stat-val { font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
-  .stat-val.g { color: var(--green); }
-  .stat-val.a { color: var(--amber); }
-  .stat-val.r { color: var(--red); }
+  .stat-val.g { color: var(--green); } .stat-val.a { color: var(--amber); } .stat-val.r { color: var(--red); }
 
-  /* ── Section title ── */
   .section-hd { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; margin-top: 28px; }
   .section-hd:first-of-type { margin-top: 0; }
-  .section-hd h2 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text3); }
+  .section-hd h2 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text3); white-space: nowrap; }
   .section-hd-line { flex: 1; height: 1px; background: var(--border); }
 
-  /* ── Active sale card ── */
   .sale-card { background: var(--surface); border-radius: var(--radius-xl); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 14px; border: 1px solid var(--border); transition: box-shadow .2s; }
   .sale-card:hover { box-shadow: var(--shadow-lg); }
   .sale-card.overdue { border-color: #F0A0A0; }
-
   .card-hero { display: flex; }
   .card-img { width: 110px; min-height: 110px; flex-shrink: 0; background: var(--surface2); position: relative; overflow: hidden; cursor: pointer; }
   .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -83,7 +59,6 @@
   .card-img:hover .img-overlay { opacity: 1; }
   .img-overlay i { color: #fff; font-size: 22px; }
   .img-file-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; font-size: 0; }
-
   .card-body { flex: 1; padding: 14px 16px; min-width: 0; }
   .card-body-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 10px; }
   .sale-item { font-size: 15px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -91,12 +66,10 @@
   .sale-amt { text-align: right; flex-shrink: 0; }
   .sale-amt-val { font-size: 16px; font-weight: 600; letter-spacing: -.02em; }
   .sale-amt-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
-
   .prog-bar { height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
   .prog-fill { height: 100%; background: var(--green); border-radius: 3px; transition: width .4s; }
   .prog-label { font-size: 11px; color: var(--text3); text-align: right; margin-top: 4px; }
 
-  /* installments inside card */
   .card-insts { border-top: 1px solid var(--border); }
   .inst-row { display: flex; align-items: center; gap: 8px; padding: 8px 16px; font-size: 13px; border-bottom: 1px solid var(--border); }
   .inst-row:last-child { border-bottom: none; }
@@ -106,13 +79,11 @@
   .inst-val { font-weight: 600; font-size: 13px; white-space: nowrap; }
   .inst-date { flex: 1; font-size: 12px; color: var(--text2); }
   .inst-paiddate { font-size: 11px; color: var(--green); }
-
   .badge { font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 5px; white-space: nowrap; }
   .badge.paid { background: var(--green-bg); color: var(--green); }
   .badge.pending { background: var(--amber-bg); color: var(--amber); }
   .badge.overdue { background: var(--red-bg); color: var(--red); }
 
-  /* note */
   .card-note { display: flex; gap: 8px; padding: 10px 16px; background: #FEFCF7; border-top: 1px solid var(--border); font-size: 12px; color: var(--text2); }
   .card-note i { flex-shrink: 0; margin-top: 1px; font-size: 14px; color: var(--amber); }
   .note-text { white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
@@ -121,12 +92,10 @@
   .note-editor textarea:focus { border-color: var(--accent); }
   .note-editor-actions { display: flex; gap: 6px; margin-top: 8px; }
 
-  /* card footer */
   .card-footer { display: flex; align-items: center; gap: 6px; padding: 10px 16px; border-top: 1px solid var(--border); background: var(--surface2); flex-wrap: wrap; }
   .link-chip { display: flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 5px 10px; flex: 1; min-width: 0; max-width: 240px; }
   .link-chip code { font-family: var(--mono); font-size: 10px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
 
-  /* Buttons */
   .btn { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid var(--border2); background: var(--surface); color: var(--text); font-family: var(--font); transition: all .15s; white-space: nowrap; }
   .btn:hover { background: var(--surface2); }
   .btn:active { transform: scale(.97); }
@@ -137,8 +106,8 @@
   .btn.ghost { border: none; background: none; color: var(--text2); }
   .btn.ghost:hover { color: var(--text); background: var(--surface2); }
   .btn.sm { padding: 5px 9px; font-size: 11px; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 
-  /* Done list */
   .done-list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow); }
   .done-row { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-bottom: 1px solid var(--border); }
   .done-row:last-child { border-bottom: none; }
@@ -151,7 +120,6 @@
   .done-val { font-size: 13px; font-weight: 600; }
   .done-n { font-size: 11px; color: var(--green); }
 
-  /* Modal */
   .modal-wrap { position: fixed; inset: 0; background: rgba(0,0,0,.4); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
   .modal { background: var(--surface); border-radius: var(--radius-xl); padding: 24px; width: 100%; max-width: 400px; box-shadow: var(--shadow-lg); }
   .modal-hd { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
@@ -165,10 +133,7 @@
   .hist-desc { font-size: 13px; font-weight: 500; }
   .hist-when { font-size: 11px; color: var(--text3); }
   .hist-val { font-size: 14px; font-weight: 600; color: var(--green); }
-  .empty-hist { text-align: center; padding: 24px; color: var(--text3); font-size: 13px; }
-  .empty-hist i { font-size: 32px; display: block; margin-bottom: 8px; opacity: .4; }
 
-  /* New sale form */
   .form-card { background: var(--surface); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--border); }
   .form-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 20px; }
   .fg { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
@@ -176,27 +141,22 @@
   .fg input, .fg select, .fg textarea { font-family: var(--font); font-size: 14px; padding: 9px 12px; border: 1px solid var(--border2); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); width: 100%; outline: none; transition: border-color .15s; }
   .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--accent); }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
   .upload-area { border: 2px dashed var(--border2); border-radius: var(--radius-md); padding: 24px 16px; text-align: center; cursor: pointer; color: var(--text3); font-size: 13px; position: relative; transition: all .15s; }
   .upload-area:hover { border-color: var(--accent); background: #F5F7FF; color: var(--text2); }
   .upload-area i { font-size: 28px; display: block; margin-bottom: 8px; }
   .upload-area input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
   .upload-preview { width: 100%; max-height: 160px; object-fit: cover; border-radius: var(--radius-md); display: none; }
-
   .inst-preview { background: var(--surface2); border-radius: var(--radius-md); padding: 12px 14px; margin-top: 4px; }
   .ipr { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; color: var(--text2); border-bottom: 1px solid var(--border); }
   .ipr:last-child { border-bottom: none; }
   .ipr span:last-child { font-weight: 500; color: var(--text); }
 
-  /* Config */
   .config-card { background: var(--surface); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--border); }
   .config-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
   .config-sub { font-size: 13px; color: var(--text2); margin-bottom: 20px; line-height: 1.5; }
 
-  /* Buyer view */
+  /* Buyer */
   .buyer-wrap { max-width: 480px; margin: 0 auto; padding: 20px 16px 60px; }
-  .buyer-back-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: var(--text2); background: none; border: none; cursor: pointer; font-family: var(--font); margin-bottom: 16px; padding: 0; }
-  .buyer-back-btn:hover { color: var(--text); }
   .buyer-hero-img { width: 100%; height: 180px; object-fit: cover; border-radius: var(--radius-xl); margin-bottom: 16px; display: block; }
   .buyer-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 18px 20px; margin-bottom: 12px; box-shadow: var(--shadow); }
   .buyer-card.highlight { border-color: var(--green-light); }
@@ -205,18 +165,20 @@
   .pix-amount { font-size: 30px; font-weight: 700; color: var(--green); margin: 8px 0; letter-spacing: -.02em; }
   .pix-hint { font-size: 11px; color: var(--text3); margin-bottom: 10px; }
 
-  /* Empty state */
   .empty { text-align: center; padding: 60px 20px; color: var(--text3); }
   .empty i { font-size: 44px; display: block; margin-bottom: 12px; opacity: .3; }
   .empty p { font-size: 14px; }
   .empty small { font-size: 12px; display: block; margin-top: 4px; }
 
-  /* Toast */
+  /* Loading */
+  .loading { text-align: center; padding: 60px 20px; color: var(--text3); }
+  .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--green); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 12px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(0); background: var(--text); color: #fff; padding: 10px 18px; border-radius: 99px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 7px; z-index: 300; box-shadow: var(--shadow-lg); animation: toastIn .2s ease; white-space: nowrap; }
   .toast.warn { background: var(--amber); }
   @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(8px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
 
-  /* Responsive */
   @media (max-width: 520px) {
     .stats { grid-template-columns: repeat(2,1fr); }
     .form-row { grid-template-columns: 1fr; }
@@ -226,35 +188,37 @@
 </style>
 </head>
 <body>
+<div id="app"><div class="app"><div class="loading"><div class="spinner"></div>Carregando...</div></div></div>
 
-<div id="app"></div>
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getFirestore, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
-<script>
-// ── Storage helpers ──────────────────────────────────────────────────────
-const DB = {
-  get(k) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch { return null; } },
-  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+const firebaseConfig = {
+  apiKey: "AIzaSyAqe-OljVa4j5wF6g4x_fS3QNT0LqdW2yA",
+  authDomain: "minhas-vendas-1c935.firebaseapp.com",
+  projectId: "minhas-vendas-1c935",
+  storageBucket: "minhas-vendas-1c935.firebasestorage.app",
+  messagingSenderId: "190327325486",
+  appId: "1:190327325486:web:abcca895555cf84e5830bf"
 };
 
-// ── State ────────────────────────────────────────────────────────────────
-let sales = DB.get('sales') || [];
-let pixKey = DB.get('pixKey') || '';
-let ui = { tab: 'sales', modal: null, editNote: null, newImg: null, buyerView: null };
+const fireApp = initializeApp(firebaseConfig);
+const db = getFirestore(fireApp);
 
-// ── Utils ────────────────────────────────────────────────────────────────
+// ── Utils ──────────────────────────────────────────────────────────────
 const fmt = v => 'R$ ' + parseFloat(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const today = () => new Date().toISOString().split('T')[0];
 const uid = () => Math.random().toString(36).slice(2, 10);
 const isOverdue = d => d && d < today();
 function fmtDate(d) { if (!d) return '—'; const [y, m, dd] = d.split('-'); return `${dd}/${m}/${y}`; }
-function fmtShort(d) { if (!d) return '—'; const [y, m, dd] = d.split('-'); return `${dd}/${m}`; }
 function addMonths(s, n) { const [y, m, d] = s.split('-').map(Number); const dt = new Date(y, m - 1 + n, d); return dt.toISOString().split('T')[0]; }
 function calcInsts(total, n, firstDate) {
   const base = Math.floor(total / n * 100) / 100;
   const diff = Math.round((total - base * n) * 100) / 100;
   return Array.from({ length: n }, (_, i) => ({ num: i + 1, value: i === n - 1 ? +(base + diff).toFixed(2) : base, date: addMonths(firstDate, i), paid: false, paidAt: null }));
 }
-function saveSales() { DB.set('sales', sales); }
 
 function toast(msg, warn = false) {
   document.querySelectorAll('.toast').forEach(t => t.remove());
@@ -265,28 +229,62 @@ function toast(msg, warn = false) {
   setTimeout(() => d.remove(), 2500);
 }
 
-// ── Check hash for buyer view ─────────────────────────────────────────────
-function checkHash() {
-  const h = location.hash.slice(1);
-  if (h.startsWith('buyer-')) { ui.buyerView = h.slice(6); }
+// ── State ──────────────────────────────────────────────────────────────
+let sales = [];
+let pixKey = '';
+let ui = { tab: 'sales', modal: null, editNote: null, newImg: null, buyerView: null, loading: true };
+
+// ── Firebase ops ───────────────────────────────────────────────────────
+async function loadAll() {
+  try {
+    const [salesSnap, configSnap] = await Promise.all([
+      getDocs(collection(db, 'sales')),
+      getDoc(doc(db, 'config', 'main'))
+    ]);
+    sales = salesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    sales.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+    if (configSnap.exists()) pixKey = configSnap.data().pixKey || '';
+  } catch (e) { console.error(e); }
+  ui.loading = false;
 }
 
-// ── Render ────────────────────────────────────────────────────────────────
+async function saveSale(sale) {
+  const { id, ...data } = sale;
+  await setDoc(doc(db, 'sales', id), data);
+}
+
+async function deleteSale(id) {
+  await deleteDoc(doc(db, 'sales', id));
+}
+
+async function saveConfig() {
+  await setDoc(doc(db, 'config', 'main'), { pixKey });
+}
+
+async function loadSale(id) {
+  const snap = await getDoc(doc(db, 'sales', id));
+  if (snap.exists()) return { id: snap.id, ...snap.data() };
+  return null;
+}
+
+// ── Render ──────────────────────────────────────────────────────────────
 function render() {
   const app = document.getElementById('app');
-  if (ui.buyerView) { app.innerHTML = renderBuyer(ui.buyerView); attachBuyer(); return; }
-  let h = renderTopbar() + renderStats();
+  if (ui.loading) { app.innerHTML = `<div class="app"><div class="loading"><div class="spinner"></div>Carregando...</div></div>`; return; }
+  if (ui.buyerView) { renderBuyerAsync(ui.buyerView); return; }
+  let h = `<div class="app">` + renderTopbar() + renderStats();
   if (ui.tab === 'sales') h += renderSales();
   else if (ui.tab === 'new') h += renderNew();
   else h += renderConfig();
   if (ui.modal) h += renderModal();
+  h += `</div>`;
   app.innerHTML = h;
   attach();
 }
 
 function renderTopbar() {
   const tabs = [['sales','ti-layout-cards','Vendas'],['new','ti-plus','Nova'],['config','ti-settings','Pix']];
-  return `<div class="app"><div class="topbar">
+  return `<div class="topbar">
     <div class="logo">
       <div class="logo-icon"><i class="ti ti-receipt"></i></div>
       <div><div class="logo-text">Minhas Vendas</div><div class="logo-sub">Controle de parcelamentos</div></div>
@@ -296,8 +294,8 @@ function renderTopbar() {
 }
 
 function renderStats() {
-  let total=0,recv=0,pend=0,over=0;
-  sales.forEach(s => s.installments.forEach(i => {
+  let total=0, recv=0, pend=0, over=0;
+  sales.forEach(s => s.installments?.forEach(i => {
     total+=i.value; if(i.paid) recv+=i.value; else { pend+=i.value; if(isOverdue(i.date)) over+=i.value; }
   }));
   return `<div class="stats">
@@ -310,8 +308,8 @@ function renderStats() {
 
 function renderSales() {
   if (!sales.length) return `<div class="empty"><i class="ti ti-tag-off"></i><p>Nenhuma venda registrada</p><small>Clique em "Nova" para começar</small></div>`;
-  const active = sales.filter(s => s.installments.some(i => !i.paid));
-  const done = sales.filter(s => s.installments.every(i => i.paid));
+  const active = sales.filter(s => s.installments?.some(i => !i.paid));
+  const done = sales.filter(s => s.installments?.every(i => i.paid));
   let h = '';
   if (active.length) {
     h += `<div class="section-hd"><h2>Vendas ativas (${active.length})</h2><div class="section-hd-line"></div></div>`;
@@ -328,7 +326,7 @@ function renderSales() {
       </div>`;
     }).join('')}</div>`;
   }
-  return h + '</div>';
+  return h;
 }
 
 function renderSaleCard(s) {
@@ -337,12 +335,12 @@ function renderSaleCard(s) {
   const pct = Math.round(paid / total * 100);
   const over = s.installments.some(i => !i.paid && isOverdue(i.date));
   const tv = s.installments.reduce((a,i) => a+i.value, 0);
-  const link = `${location.href.split('#')[0]}#buyer-${s.id}`;
+  const link = `${location.origin}${location.pathname}#buyer-${s.id}`;
   const editingNote = ui.editNote === s.id;
 
   let h = `<div class="sale-card ${over?'overdue':''}" data-sid="${s.id}">
     <div class="card-hero">
-      <div class="card-img" data-upload="${s.id}">
+      <div class="card-img">
         ${s.img ? `<img src="${s.img}" alt="${s.item}">` : `<div class="card-img-ph"><i class="ti ti-photo"></i>Adicionar foto</div>`}
         <div class="img-overlay"><i class="ti ti-camera"></i></div>
         <input type="file" accept="image/*" class="img-file-input" data-sid="${s.id}">
@@ -353,10 +351,7 @@ function renderSaleCard(s) {
             <div class="sale-item">${s.item}</div>
             <div class="sale-buyer"><i class="ti ti-user" style="font-size:11px"></i>${s.buyer}</div>
           </div>
-          <div class="sale-amt">
-            <div class="sale-amt-val">${fmt(tv)}</div>
-            <div class="sale-amt-sub">${total}×</div>
-          </div>
+          <div class="sale-amt"><div class="sale-amt-val">${fmt(tv)}</div><div class="sale-amt-sub">${total}×</div></div>
         </div>
         <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
         <div class="prog-label">${paid} de ${total} pago${paid!==1?'s':''}</div>
@@ -364,20 +359,19 @@ function renderSaleCard(s) {
     </div>
     <div class="card-insts">${s.installments.map(i => {
       const status = i.paid ? 'paid' : isOverdue(i.date) ? 'overdue' : 'pending';
-      const labels = { paid: 'Paga', pending: 'Pendente', overdue: 'Atrasada' };
+      const labels = {paid:'Paga',pending:'Pendente',overdue:'Atrasada'};
       return `<div class="inst-row">
-        <div class="inst-num ${status}">${i.paid ? '<i class="ti ti-check" style="font-size:10px"></i>' : i.num}</div>
+        <div class="inst-num ${status}">${i.paid?'<i class="ti ti-check" style="font-size:10px"></i>':i.num}</div>
         <span class="inst-val">${fmt(i.value)}</span>
-        <span class="inst-date">venc. ${fmtDate(i.date)}${i.paidAt ? ` <span class="inst-paiddate">· pago ${fmtDate(i.paidAt)}</span>` : ''}</span>
+        <span class="inst-date">venc. ${fmtDate(i.date)}${i.paidAt?` <span class="inst-paiddate">· pago ${fmtDate(i.paidAt)}</span>`:''}</span>
         <span class="badge ${status}">${labels[status]}</span>
-        ${!i.paid ? `<button class="btn sm btn-confirm" data-sid="${s.id}" data-inum="${i.num}"><i class="ti ti-check"></i>Ok</button>` : ''}
+        ${!i.paid?`<button class="btn sm btn-confirm" data-sid="${s.id}" data-inum="${i.num}"><i class="ti ti-check"></i>Ok</button>`:''}
       </div>`;
     }).join('')}</div>`;
 
-  // Note
   if (editingNote) {
     h += `<div class="note-editor">
-      <textarea id="note-ta" placeholder="Observações sobre esta venda...">${s.note || ''}</textarea>
+      <textarea id="note-ta" placeholder="Observações sobre esta venda...">${s.note||''}</textarea>
       <div class="note-editor-actions">
         <button class="btn primary btn-save-note" data-sid="${s.id}"><i class="ti ti-device-floppy"></i>Salvar</button>
         <button class="btn btn-cancel-note"><i class="ti ti-x"></i>Cancelar</button>
@@ -389,7 +383,7 @@ function renderSaleCard(s) {
 
   h += `<div class="card-footer">
     <button class="btn ghost btn-history" data-sid="${s.id}"><i class="ti ti-history"></i>Histórico</button>
-    <button class="btn ghost btn-note" data-sid="${s.id}"><i class="ti ti-notes"></i>${s.note ? 'Editar nota' : 'Anotação'}</button>
+    <button class="btn ghost btn-note" data-sid="${s.id}"><i class="ti ti-notes"></i>${s.note?'Editar nota':'Anotação'}</button>
     <div style="flex:1"></div>
     <div class="link-chip"><i class="ti ti-link" style="font-size:13px;flex-shrink:0;color:var(--text3)"></i><code>${link}</code></div>
     <button class="btn sm btn-copy-link" data-link="${link}" title="Copiar link"><i class="ti ti-copy"></i></button>
@@ -421,7 +415,7 @@ function renderNew() {
       <button class="btn primary" id="fn-save"><i class="ti ti-device-floppy"></i>Salvar venda</button>
       <button class="btn" id="fn-calc"><i class="ti ti-calculator"></i>Calcular parcelas</button>
     </div>
-  </div></div>`;
+  </div>`;
 }
 
 function renderConfig() {
@@ -430,34 +424,38 @@ function renderConfig() {
     <p class="config-sub">A chave aparece para o comprador quando ele abre o link da venda, junto com o valor exato da parcela.</p>
     <div class="fg"><label>CPF, e-mail, telefone ou chave aleatória</label><input id="pix-input" placeholder="seuemail@gmail.com" value="${pixKey}"></div>
     <button class="btn primary" id="btn-save-pix"><i class="ti ti-device-floppy"></i>Salvar chave Pix</button>
-  </div></div>`;
+  </div>`;
 }
 
 function renderModal() {
   const { type, saleId } = ui.modal;
   const s = sales.find(x => x.id === saleId);
   if (!s) return '';
-  if (type === 'history') {
-    const events = s.installments.filter(i => i.paid && i.paidAt).map(i => ({ date: i.paidAt, desc: `Parcela ${i.num} confirmada`, val: i.value })).sort((a, b) => b.date.localeCompare(a.date));
-    return `<div class="modal-wrap" id="modal-wrap">
-      <div class="modal">
-        <div class="modal-hd"><h3>Histórico de pagamentos</h3><button class="btn ghost sm" id="close-modal"><i class="ti ti-x"></i></button></div>
-        <p class="modal-sub">${s.item} · ${s.buyer}</p>
-        ${events.length ? events.map(e => `<div class="hist-row">
-          <div class="hist-dot"><i class="ti ti-circle-check"></i></div>
-          <div class="hist-info"><div class="hist-desc">${e.desc}</div><div class="hist-when">${fmtDate(e.date)}</div></div>
-          <div class="hist-val">${fmt(e.val)}</div>
-        </div>`).join('') : `<div class="empty-hist"><i class="ti ti-history"></i>Nenhum pagamento confirmado ainda</div>`}
-        <div style="margin-top:18px;text-align:right"><button class="btn" id="close-modal2">Fechar</button></div>
-      </div>
-    </div>`;
-  }
-  return '';
+  const events = s.installments.filter(i => i.paid && i.paidAt).map(i => ({ date: i.paidAt, desc: `Parcela ${i.num} confirmada`, val: i.value })).sort((a,b) => b.date.localeCompare(a.date));
+  return `<div class="modal-wrap" id="modal-wrap">
+    <div class="modal">
+      <div class="modal-hd"><h3>Histórico de pagamentos</h3><button class="btn ghost sm" id="close-modal"><i class="ti ti-x"></i></button></div>
+      <p class="modal-sub">${s.item} · ${s.buyer}</p>
+      ${events.length ? events.map(e => `<div class="hist-row">
+        <div class="hist-dot"><i class="ti ti-circle-check"></i></div>
+        <div class="hist-info"><div class="hist-desc">${e.desc}</div><div class="hist-when">${fmtDate(e.date)}</div></div>
+        <div class="hist-val">${fmt(e.val)}</div>
+      </div>`).join('') : `<div style="text-align:center;padding:24px;color:var(--text3);font-size:13px"><i class="ti ti-history" style="font-size:28px;display:block;margin-bottom:8px;opacity:.4"></i>Nenhum pagamento confirmado ainda</div>`}
+      <div style="margin-top:18px;text-align:right"><button class="btn" id="close-modal2">Fechar</button></div>
+    </div>
+  </div>`;
 }
 
-function renderBuyer(saleId) {
-  const s = sales.find(x => x.id === saleId);
-  if (!s) return `<div class="buyer-wrap"><div class="empty" style="margin-top:60px"><i class="ti ti-receipt-off"></i><p>Venda não encontrada</p><small>Verifique o link com o vendedor</small></div></div>`;
+async function renderBuyerAsync(saleId) {
+  document.getElementById('app').innerHTML = `<div class="buyer-wrap"><div class="loading"><div class="spinner"></div>Carregando venda...</div></div>`;
+  const s = await loadSale(saleId);
+  if (!s) {
+    document.getElementById('app').innerHTML = `<div class="buyer-wrap"><div class="empty" style="margin-top:60px"><i class="ti ti-receipt-off"></i><p>Venda não encontrada</p><small>Verifique o link com o vendedor</small></div></div>`;
+    return;
+  }
+  // load pix
+  try { const cs = await getDoc(doc(db, 'config', 'main')); if (cs.exists()) pixKey = cs.data().pixKey || ''; } catch {}
+
   const paid = s.installments.filter(i => i.paid).length;
   const total = s.installments.length;
   const pct = Math.round(paid / total * 100);
@@ -494,63 +492,65 @@ function renderBuyer(saleId) {
     <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:12px">Todas as parcelas</div>
     ${s.installments.map(i => {
       const status = i.paid ? 'paid' : isOverdue(i.date) ? 'overdue' : 'pending';
-      const labels = { paid: 'Paga', pending: 'Pendente', overdue: 'Atrasada' };
+      const labels = {paid:'Paga',pending:'Pendente',overdue:'Atrasada'};
       return `<div class="inst-row">
-        <div class="inst-num ${status}">${i.paid ? '<i class="ti ti-check" style="font-size:10px"></i>' : i.num}</div>
+        <div class="inst-num ${status}">${i.paid?'<i class="ti ti-check" style="font-size:10px"></i>':i.num}</div>
         <span class="inst-val">${fmt(i.value)}</span>
         <span class="inst-date">${fmtDate(i.date)}</span>
         <span class="badge ${status}">${labels[status]}</span>
       </div>`;
     }).join('')}
   </div></div>`;
-  return h;
+
+  document.getElementById('app').innerHTML = h;
+  document.getElementById('copy-pix-btn')?.addEventListener('click', () => {
+    navigator.clipboard.writeText(pixKey).then(() => toast('Chave copiada!')).catch(() => prompt('Copie a chave Pix:', pixKey));
+  });
 }
 
-// ── Event Handlers ────────────────────────────────────────────────────────
+// ── Attach events ──────────────────────────────────────────────────────
 function attach() {
   document.querySelectorAll('.nav-btn').forEach(b => b.addEventListener('click', () => { ui.tab = b.dataset.tab; render(); }));
 
-  // confirm payment
-  document.querySelectorAll('.btn-confirm').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.btn-confirm').forEach(b => b.addEventListener('click', async () => {
+    b.disabled = true;
     const s = sales.find(x => x.id === b.dataset.sid);
     const i = s?.installments.find(x => x.num === parseInt(b.dataset.inum));
-    if (!i) return; i.paid = true; i.paidAt = today(); saveSales(); render(); toast(`Parcela ${i.num} confirmada!`);
+    if (!i) return; i.paid = true; i.paidAt = today();
+    await saveSale(s); render(); toast(`Parcela ${i.num} confirmada!`);
   }));
 
-  // history
   document.querySelectorAll('.btn-history').forEach(b => b.addEventListener('click', () => { ui.modal = { type: 'history', saleId: b.dataset.sid }; render(); }));
   ['close-modal','close-modal2'].forEach(id => document.getElementById(id)?.addEventListener('click', () => { ui.modal = null; render(); }));
   document.getElementById('modal-wrap')?.addEventListener('click', e => { if (e.target.id === 'modal-wrap') { ui.modal = null; render(); } });
 
-  // note
   document.querySelectorAll('.btn-note').forEach(b => b.addEventListener('click', () => { ui.editNote = b.dataset.sid; render(); }));
-  document.querySelectorAll('.btn-save-note').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.btn-save-note').forEach(b => b.addEventListener('click', async () => {
     const s = sales.find(x => x.id === b.dataset.sid); if (!s) return;
-    s.note = document.getElementById('note-ta').value.trim(); ui.editNote = null; saveSales(); render(); toast('Nota salva!');
+    s.note = document.getElementById('note-ta').value.trim();
+    ui.editNote = null; await saveSale(s); render(); toast('Nota salva!');
   }));
   document.querySelectorAll('.btn-cancel-note').forEach(b => b.addEventListener('click', () => { ui.editNote = null; render(); }));
 
-  // copy link
   document.querySelectorAll('.btn-copy-link').forEach(b => b.addEventListener('click', () => {
-    navigator.clipboard.writeText(b.dataset.link).then(() => toast('Link copiado!')).catch(() => { prompt('Copie o link:', b.dataset.link); });
+    navigator.clipboard.writeText(b.dataset.link).then(() => toast('Link copiado!')).catch(() => prompt('Copie o link:', b.dataset.link));
   }));
 
-  // delete
-  document.querySelectorAll('.btn-del').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.btn-del').forEach(b => b.addEventListener('click', async () => {
     if (!confirm('Excluir esta venda? Esta ação não pode ser desfeita.')) return;
-    sales = sales.filter(s => s.id !== b.dataset.sid); saveSales(); render(); toast('Venda removida', true);
+    await deleteSale(b.dataset.sid);
+    sales = sales.filter(s => s.id !== b.dataset.sid);
+    render(); toast('Venda removida', true);
   }));
 
-  // image upload on existing cards
   document.querySelectorAll('.img-file-input').forEach(inp => inp.addEventListener('change', e => {
     const file = e.target.files[0]; if (!file) return;
-    const r = new FileReader(); r.onload = ev => {
+    const r = new FileReader(); r.onload = async ev => {
       const s = sales.find(x => x.id === inp.dataset.sid); if (!s) return;
-      s.img = ev.target.result; saveSales(); render(); toast('Foto atualizada!');
+      s.img = ev.target.result; await saveSale(s); render(); toast('Foto atualizada!');
     }; r.readAsDataURL(file);
   }));
 
-  // new sale form
   if (ui.tab === 'new') {
     const newImgInput = document.getElementById('new-img-input');
     const newImgPreview = document.getElementById('new-img-preview');
@@ -564,7 +564,6 @@ function attach() {
         if (newUploadLabel) newUploadLabel.style.display = 'none';
       }; r.readAsDataURL(file);
     });
-
     function calcPreview() {
       const total = parseFloat(document.getElementById('fn-total')?.value || 0);
       const n = parseInt(document.getElementById('fn-n')?.value || 0);
@@ -577,7 +576,7 @@ function attach() {
     }
     ['fn-total','fn-n','fn-date'].forEach(id => document.getElementById(id)?.addEventListener('input', calcPreview));
     document.getElementById('fn-calc')?.addEventListener('click', calcPreview);
-    document.getElementById('fn-save')?.addEventListener('click', () => {
+    document.getElementById('fn-save')?.addEventListener('click', async () => {
       const item = document.getElementById('fn-item').value.trim();
       const buyer = document.getElementById('fn-buyer').value.trim();
       const total = parseFloat(document.getElementById('fn-total').value);
@@ -585,26 +584,30 @@ function attach() {
       const date = document.getElementById('fn-date').value;
       const note = document.getElementById('fn-note').value.trim();
       if (!item || !buyer || !total || !n || !date) { toast('Preencha todos os campos obrigatórios', true); return; }
-      sales.unshift({ id: uid(), item, buyer, img: ui.newImg || null, note: note || null, installments: calcInsts(total, n, date), createdAt: today() });
-      ui.newImg = null; saveSales(); ui.tab = 'sales'; render(); toast('Venda registrada!');
+      const btn = document.getElementById('fn-save'); btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2"></i>Salvando...';
+      const sale = { id: uid(), item, buyer, img: ui.newImg || null, note: note || null, installments: calcInsts(total, n, date), createdAt: today() };
+      await saveSale(sale);
+      sales.unshift(sale); ui.newImg = null; ui.tab = 'sales'; render(); toast('Venda registrada!');
     });
   }
 
   if (ui.tab === 'config') {
-    document.getElementById('btn-save-pix')?.addEventListener('click', () => {
-      pixKey = document.getElementById('pix-input').value.trim(); DB.set('pixKey', pixKey); toast('Chave Pix salva!');
+    document.getElementById('btn-save-pix')?.addEventListener('click', async () => {
+      const btn = document.getElementById('btn-save-pix'); btn.disabled = true;
+      pixKey = document.getElementById('pix-input').value.trim();
+      await saveConfig(); btn.disabled = false; toast('Chave Pix salva!');
     });
   }
 }
 
-function attachBuyer() {
-  document.getElementById('copy-pix-btn')?.addEventListener('click', () => {
-    navigator.clipboard.writeText(pixKey).then(() => toast('Chave copiada!')).catch(() => { prompt('Copie a chave Pix:', pixKey); });
-  });
+// ── Init ───────────────────────────────────────────────────────────────
+function checkHash() {
+  const h = location.hash.slice(1);
+  if (h.startsWith('buyer-')) ui.buyerView = h.slice(6);
 }
 
-// ── Init ──────────────────────────────────────────────────────────────────
 checkHash();
+await loadAll();
 render();
 </script>
 </body>
