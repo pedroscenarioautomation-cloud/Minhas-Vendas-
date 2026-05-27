@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minhas Vendas Parceladas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
+<style>
+  :root {
+    --bg: #F7F5F2;
+    --surface: #FFFFFF;
+    --surface2: #F0EDE8;
+    --surface3: #E8E4DE;
+    --border: #DDD9D2;
+    --border2: #C8C3BB;
+    --text: #1A1816;
+    --text2: #6B6660;
+    --text3: #9C9690;
+    --green: #1A7A5E;
+    --green-bg: #E8F5F0;
+    --green-light: #D0EDE3;
+    --amber: #A06020;
+    --amber-bg: #FDF3E3;
+    --red: #9B2626;
+    --red-bg: #FCEAEA;
+    --accent: #2D5BE3;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+    --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
+    --shadow-lg: 0 4px 20px rgba(0,0,0,.1);
+    --font: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* ── Layout ── */
+  .app { max-width: 720px; margin: 0 auto; padding: 24px 20px 60px; }
+
+  /* ── Topbar ── */
+  .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-icon { width: 36px; height: 36px; background: var(--text); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; }
+  .logo-icon i { color: #fff; font-size: 18px; }
+  .logo-text { font-size: 16px; font-weight: 600; letter-spacing: -.02em; }
+  .logo-sub { font-size: 12px; color: var(--text3); margin-top: 1px; }
+
+  .nav { display: flex; gap: 2px; background: var(--surface3); border-radius: var(--radius-md); padding: 3px; }
+  .nav-btn { padding: 7px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; background: transparent; color: var(--text2); font-family: var(--font); display: flex; align-items: center; gap: 5px; transition: all .15s; }
+  .nav-btn.active { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+  .nav-btn:hover:not(.active) { color: var(--text); }
+
+  /* ── Stats ── */
+  .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 28px; }
+  .stat { background: var(--surface); border-radius: var(--radius-lg); padding: 14px 16px; box-shadow: var(--shadow); }
+  .stat-label { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 5px; }
+  .stat-val { font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
+  .stat-val.g { color: var(--green); }
+  .stat-val.a { color: var(--amber); }
+  .stat-val.r { color: var(--red); }
+
+  /* ── Section title ── */
+  .section-hd { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; margin-top: 28px; }
+  .section-hd:first-of-type { margin-top: 0; }
+  .section-hd h2 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text3); }
+  .section-hd-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── Active sale card ── */
+  .sale-card { background: var(--surface); border-radius: var(--radius-xl); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 14px; border: 1px solid var(--border); transition: box-shadow .2s; }
+  .sale-card:hover { box-shadow: var(--shadow-lg); }
+  .sale-card.overdue { border-color: #F0A0A0; }
+
+  .card-hero { display: flex; }
+  .card-img { width: 110px; min-height: 110px; flex-shrink: 0; background: var(--surface2); position: relative; overflow: hidden; cursor: pointer; }
+  .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card-img-ph { width: 100%; height: 100%; min-height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: var(--text3); font-size: 11px; text-align: center; padding: 12px; }
+  .card-img-ph i { font-size: 26px; }
+  .img-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .15s; }
+  .card-img:hover .img-overlay { opacity: 1; }
+  .img-overlay i { color: #fff; font-size: 22px; }
+  .img-file-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; font-size: 0; }
+
+  .card-body { flex: 1; padding: 14px 16px; min-width: 0; }
+  .card-body-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 10px; }
+  .sale-item { font-size: 15px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sale-buyer { font-size: 12px; color: var(--text2); margin-top: 3px; display: flex; align-items: center; gap: 4px; }
+  .sale-amt { text-align: right; flex-shrink: 0; }
+  .sale-amt-val { font-size: 16px; font-weight: 600; letter-spacing: -.02em; }
+  .sale-amt-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+  .prog-bar { height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .prog-fill { height: 100%; background: var(--green); border-radius: 3px; transition: width .4s; }
+  .prog-label { font-size: 11px; color: var(--text3); text-align: right; margin-top: 4px; }
+
+  /* installments inside card */
+  .card-insts { border-top: 1px solid var(--border); }
+  .inst-row { display: flex; align-items: center; gap: 8px; padding: 8px 16px; font-size: 13px; border-bottom: 1px solid var(--border); }
+  .inst-row:last-child { border-bottom: none; }
+  .inst-num { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; flex-shrink: 0; background: var(--surface2); color: var(--text2); }
+  .inst-num.paid { background: var(--green-bg); color: var(--green); }
+  .inst-num.overdue { background: var(--red-bg); color: var(--red); }
+  .inst-val { font-weight: 600; font-size: 13px; white-space: nowrap; }
+  .inst-date { flex: 1; font-size: 12px; color: var(--text2); }
+  .inst-paiddate { font-size: 11px; color: var(--green); }
+
+  .badge { font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 5px; white-space: nowrap; }
+  .badge.paid { background: var(--green-bg); color: var(--green); }
+  .badge.pending { background: var(--amber-bg); color: var(--amber); }
+  .badge.overdue { background: var(--red-bg); color: var(--red); }
+
+  /* note */
+  .card-note { display: flex; gap: 8px; padding: 10px 16px; background: #FEFCF7; border-top: 1px solid var(--border); font-size: 12px; color: var(--text2); }
+  .card-note i { flex-shrink: 0; margin-top: 1px; font-size: 14px; color: var(--amber); }
+  .note-text { white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
+  .note-editor { padding: 10px 16px; border-top: 1px solid var(--border); background: var(--surface2); }
+  .note-editor textarea { width: 100%; font-family: var(--font); font-size: 13px; padding: 8px 10px; border: 1px solid var(--border2); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); resize: vertical; min-height: 64px; outline: none; }
+  .note-editor textarea:focus { border-color: var(--accent); }
+  .note-editor-actions { display: flex; gap: 6px; margin-top: 8px; }
+
+  /* card footer */
+  .card-footer { display: flex; align-items: center; gap: 6px; padding: 10px 16px; border-top: 1px solid var(--border); background: var(--surface2); flex-wrap: wrap; }
+  .link-chip { display: flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 5px 10px; flex: 1; min-width: 0; max-width: 240px; }
+  .link-chip code { font-family: var(--mono); font-size: 10px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+
+  /* Buttons */
+  .btn { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid var(--border2); background: var(--surface); color: var(--text); font-family: var(--font); transition: all .15s; white-space: nowrap; }
+  .btn:hover { background: var(--surface2); }
+  .btn:active { transform: scale(.97); }
+  .btn.primary { background: var(--green); border-color: var(--green); color: #fff; }
+  .btn.primary:hover { background: #155E48; border-color: #155E48; }
+  .btn.danger { border-color: #F0A0A0; color: var(--red); }
+  .btn.danger:hover { background: var(--red-bg); }
+  .btn.ghost { border: none; background: none; color: var(--text2); }
+  .btn.ghost:hover { color: var(--text); background: var(--surface2); }
+  .btn.sm { padding: 5px 9px; font-size: 11px; }
+
+  /* Done list */
+  .done-list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow); }
+  .done-row { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-bottom: 1px solid var(--border); }
+  .done-row:last-child { border-bottom: none; }
+  .done-thumb { width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--surface2); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .done-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .done-info { flex: 1; min-width: 0; }
+  .done-item-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .done-buyer-name { font-size: 11px; color: var(--text3); }
+  .done-right { text-align: right; }
+  .done-val { font-size: 13px; font-weight: 600; }
+  .done-n { font-size: 11px; color: var(--green); }
+
+  /* Modal */
+  .modal-wrap { position: fixed; inset: 0; background: rgba(0,0,0,.4); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .modal { background: var(--surface); border-radius: var(--radius-xl); padding: 24px; width: 100%; max-width: 400px; box-shadow: var(--shadow-lg); }
+  .modal-hd { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+  .modal-hd h3 { font-size: 16px; font-weight: 600; }
+  .modal-sub { font-size: 13px; color: var(--text2); margin-bottom: 18px; }
+  .hist-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .hist-row:last-of-type { border-bottom: none; }
+  .hist-dot { width: 32px; height: 32px; border-radius: 50%; background: var(--green-bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .hist-dot i { color: var(--green); font-size: 15px; }
+  .hist-info { flex: 1; }
+  .hist-desc { font-size: 13px; font-weight: 500; }
+  .hist-when { font-size: 11px; color: var(--text3); }
+  .hist-val { font-size: 14px; font-weight: 600; color: var(--green); }
+  .empty-hist { text-align: center; padding: 24px; color: var(--text3); font-size: 13px; }
+  .empty-hist i { font-size: 32px; display: block; margin-bottom: 8px; opacity: .4; }
+
+  /* New sale form */
+  .form-card { background: var(--surface); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  .form-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 20px; }
+  .fg { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+  .fg label { font-size: 12px; font-weight: 500; color: var(--text2); }
+  .fg input, .fg select, .fg textarea { font-family: var(--font); font-size: 14px; padding: 9px 12px; border: 1px solid var(--border2); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); width: 100%; outline: none; transition: border-color .15s; }
+  .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--accent); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .upload-area { border: 2px dashed var(--border2); border-radius: var(--radius-md); padding: 24px 16px; text-align: center; cursor: pointer; color: var(--text3); font-size: 13px; position: relative; transition: all .15s; }
+  .upload-area:hover { border-color: var(--accent); background: #F5F7FF; color: var(--text2); }
+  .upload-area i { font-size: 28px; display: block; margin-bottom: 8px; }
+  .upload-area input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .upload-preview { width: 100%; max-height: 160px; object-fit: cover; border-radius: var(--radius-md); display: none; }
+
+  .inst-preview { background: var(--surface2); border-radius: var(--radius-md); padding: 12px 14px; margin-top: 4px; }
+  .ipr { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; color: var(--text2); border-bottom: 1px solid var(--border); }
+  .ipr:last-child { border-bottom: none; }
+  .ipr span:last-child { font-weight: 500; color: var(--text); }
+
+  /* Config */
+  .config-card { background: var(--surface); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  .config-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+  .config-sub { font-size: 13px; color: var(--text2); margin-bottom: 20px; line-height: 1.5; }
+
+  /* Buyer view */
+  .buyer-wrap { max-width: 480px; margin: 0 auto; padding: 20px 16px 60px; }
+  .buyer-back-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: var(--text2); background: none; border: none; cursor: pointer; font-family: var(--font); margin-bottom: 16px; padding: 0; }
+  .buyer-back-btn:hover { color: var(--text); }
+  .buyer-hero-img { width: 100%; height: 180px; object-fit: cover; border-radius: var(--radius-xl); margin-bottom: 16px; display: block; }
+  .buyer-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 18px 20px; margin-bottom: 12px; box-shadow: var(--shadow); }
+  .buyer-card.highlight { border-color: var(--green-light); }
+  .pix-box { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; text-align: center; background: var(--surface2); margin-top: 14px; }
+  .pix-key { font-family: var(--mono); font-size: 15px; font-weight: 500; word-break: break-all; color: var(--text); margin: 6px 0; }
+  .pix-amount { font-size: 30px; font-weight: 700; color: var(--green); margin: 8px 0; letter-spacing: -.02em; }
+  .pix-hint { font-size: 11px; color: var(--text3); margin-bottom: 10px; }
+
+  /* Empty state */
+  .empty { text-align: center; padding: 60px 20px; color: var(--text3); }
+  .empty i { font-size: 44px; display: block; margin-bottom: 12px; opacity: .3; }
+  .empty p { font-size: 14px; }
+  .empty small { font-size: 12px; display: block; margin-top: 4px; }
+
+  /* Toast */
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(0); background: var(--text); color: #fff; padding: 10px 18px; border-radius: 99px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 7px; z-index: 300; box-shadow: var(--shadow-lg); animation: toastIn .2s ease; white-space: nowrap; }
+  .toast.warn { background: var(--amber); }
+  @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(8px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+  /* Responsive */
+  @media (max-width: 520px) {
+    .stats { grid-template-columns: repeat(2,1fr); }
+    .form-row { grid-template-columns: 1fr; }
+    .stat-val { font-size: 16px; }
+    .nav-btn span { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+// ── Storage helpers ──────────────────────────────────────────────────────
+const DB = {
+  get(k) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+
+// ── State ────────────────────────────────────────────────────────────────
+let sales = DB.get('sales') || [];
+let pixKey = DB.get('pixKey') || '';
+let ui = { tab: 'sales', modal: null, editNote: null, newImg: null, buyerView: null };
+
+// ── Utils ────────────────────────────────────────────────────────────────
+const fmt = v => 'R$ ' + parseFloat(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const today = () => new Date().toISOString().split('T')[0];
+const uid = () => Math.random().toString(36).slice(2, 10);
+const isOverdue = d => d && d < today();
+function fmtDate(d) { if (!d) return '—'; const [y, m, dd] = d.split('-'); return `${dd}/${m}/${y}`; }
+function fmtShort(d) { if (!d) return '—'; const [y, m, dd] = d.split('-'); return `${dd}/${m}`; }
+function addMonths(s, n) { const [y, m, d] = s.split('-').map(Number); const dt = new Date(y, m - 1 + n, d); return dt.toISOString().split('T')[0]; }
+function calcInsts(total, n, firstDate) {
+  const base = Math.floor(total / n * 100) / 100;
+  const diff = Math.round((total - base * n) * 100) / 100;
+  return Array.from({ length: n }, (_, i) => ({ num: i + 1, value: i === n - 1 ? +(base + diff).toFixed(2) : base, date: addMonths(firstDate, i), paid: false, paidAt: null }));
+}
+function saveSales() { DB.set('sales', sales); }
+
+function toast(msg, warn = false) {
+  document.querySelectorAll('.toast').forEach(t => t.remove());
+  const d = document.createElement('div');
+  d.className = 'toast' + (warn ? ' warn' : '');
+  d.innerHTML = `<i class="ti ${warn ? 'ti-alert-circle' : 'ti-check'}"></i>${msg}`;
+  document.body.appendChild(d);
+  setTimeout(() => d.remove(), 2500);
+}
+
+// ── Check hash for buyer view ─────────────────────────────────────────────
+function checkHash() {
+  const h = location.hash.slice(1);
+  if (h.startsWith('buyer-')) { ui.buyerView = h.slice(6); }
+}
+
+// ── Render ────────────────────────────────────────────────────────────────
+function render() {
+  const app = document.getElementById('app');
+  if (ui.buyerView) { app.innerHTML = renderBuyer(ui.buyerView); attachBuyer(); return; }
+  let h = renderTopbar() + renderStats();
+  if (ui.tab === 'sales') h += renderSales();
+  else if (ui.tab === 'new') h += renderNew();
+  else h += renderConfig();
+  if (ui.modal) h += renderModal();
+  app.innerHTML = h;
+  attach();
+}
+
+function renderTopbar() {
+  const tabs = [['sales','ti-layout-cards','Vendas'],['new','ti-plus','Nova'],['config','ti-settings','Pix']];
+  return `<div class="app"><div class="topbar">
+    <div class="logo">
+      <div class="logo-icon"><i class="ti ti-receipt"></i></div>
+      <div><div class="logo-text">Minhas Vendas</div><div class="logo-sub">Controle de parcelamentos</div></div>
+    </div>
+    <nav class="nav">${tabs.map(([t,ic,lb]) => `<button class="nav-btn ${ui.tab===t?'active':''}" data-tab="${t}"><i class="ti ${ic}"></i><span>${lb}</span></button>`).join('')}</nav>
+  </div>`;
+}
+
+function renderStats() {
+  let total=0,recv=0,pend=0,over=0;
+  sales.forEach(s => s.installments.forEach(i => {
+    total+=i.value; if(i.paid) recv+=i.value; else { pend+=i.value; if(isOverdue(i.date)) over+=i.value; }
+  }));
+  return `<div class="stats">
+    <div class="stat"><div class="stat-label">Total vendido</div><div class="stat-val">${fmt(total)}</div></div>
+    <div class="stat"><div class="stat-label">Recebido</div><div class="stat-val g">${fmt(recv)}</div></div>
+    <div class="stat"><div class="stat-label">A receber</div><div class="stat-val a">${fmt(pend)}</div></div>
+    <div class="stat"><div class="stat-label">Atrasado</div><div class="stat-val ${over>0?'r':''}">${fmt(over)}</div></div>
+  </div>`;
+}
+
+function renderSales() {
+  if (!sales.length) return `<div class="empty"><i class="ti ti-tag-off"></i><p>Nenhuma venda registrada</p><small>Clique em "Nova" para começar</small></div>`;
+  const active = sales.filter(s => s.installments.some(i => !i.paid));
+  const done = sales.filter(s => s.installments.every(i => i.paid));
+  let h = '';
+  if (active.length) {
+    h += `<div class="section-hd"><h2>Vendas ativas (${active.length})</h2><div class="section-hd-line"></div></div>`;
+    active.forEach(s => { h += renderSaleCard(s); });
+  }
+  if (done.length) {
+    h += `<div class="section-hd" style="margin-top:32px"><h2>Concluídas (${done.length})</h2><div class="section-hd-line"></div></div>`;
+    h += `<div class="done-list">${done.map(s => {
+      const tv = s.installments.reduce((a,i) => a+i.value, 0);
+      return `<div class="done-row">
+        <div class="done-thumb">${s.img?`<img src="${s.img}" alt="">`:`<i class="ti ti-package" style="font-size:18px;color:var(--text3)"></i>`}</div>
+        <div class="done-info"><div class="done-item-name">${s.item}</div><div class="done-buyer-name">${s.buyer}</div></div>
+        <div class="done-right"><div class="done-val">${fmt(tv)}</div><div class="done-n">${s.installments.length}× pago ✓</div></div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+  return h + '</div>';
+}
+
+function renderSaleCard(s) {
+  const paid = s.installments.filter(i => i.paid).length;
+  const total = s.installments.length;
+  const pct = Math.round(paid / total * 100);
+  const over = s.installments.some(i => !i.paid && isOverdue(i.date));
+  const tv = s.installments.reduce((a,i) => a+i.value, 0);
+  const link = `${location.href.split('#')[0]}#buyer-${s.id}`;
+  const editingNote = ui.editNote === s.id;
+
+  let h = `<div class="sale-card ${over?'overdue':''}" data-sid="${s.id}">
+    <div class="card-hero">
+      <div class="card-img" data-upload="${s.id}">
+        ${s.img ? `<img src="${s.img}" alt="${s.item}">` : `<div class="card-img-ph"><i class="ti ti-photo"></i>Adicionar foto</div>`}
+        <div class="img-overlay"><i class="ti ti-camera"></i></div>
+        <input type="file" accept="image/*" class="img-file-input" data-sid="${s.id}">
+      </div>
+      <div class="card-body">
+        <div class="card-body-top">
+          <div style="min-width:0">
+            <div class="sale-item">${s.item}</div>
+            <div class="sale-buyer"><i class="ti ti-user" style="font-size:11px"></i>${s.buyer}</div>
+          </div>
+          <div class="sale-amt">
+            <div class="sale-amt-val">${fmt(tv)}</div>
+            <div class="sale-amt-sub">${total}×</div>
+          </div>
+        </div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+        <div class="prog-label">${paid} de ${total} pago${paid!==1?'s':''}</div>
+      </div>
+    </div>
+    <div class="card-insts">${s.installments.map(i => {
+      const status = i.paid ? 'paid' : isOverdue(i.date) ? 'overdue' : 'pending';
+      const labels = { paid: 'Paga', pending: 'Pendente', overdue: 'Atrasada' };
+      return `<div class="inst-row">
+        <div class="inst-num ${status}">${i.paid ? '<i class="ti ti-check" style="font-size:10px"></i>' : i.num}</div>
+        <span class="inst-val">${fmt(i.value)}</span>
+        <span class="inst-date">venc. ${fmtDate(i.date)}${i.paidAt ? ` <span class="inst-paiddate">· pago ${fmtDate(i.paidAt)}</span>` : ''}</span>
+        <span class="badge ${status}">${labels[status]}</span>
+        ${!i.paid ? `<button class="btn sm btn-confirm" data-sid="${s.id}" data-inum="${i.num}"><i class="ti ti-check"></i>Ok</button>` : ''}
+      </div>`;
+    }).join('')}</div>`;
+
+  // Note
+  if (editingNote) {
+    h += `<div class="note-editor">
+      <textarea id="note-ta" placeholder="Observações sobre esta venda...">${s.note || ''}</textarea>
+      <div class="note-editor-actions">
+        <button class="btn primary btn-save-note" data-sid="${s.id}"><i class="ti ti-device-floppy"></i>Salvar</button>
+        <button class="btn btn-cancel-note"><i class="ti ti-x"></i>Cancelar</button>
+      </div>
+    </div>`;
+  } else if (s.note) {
+    h += `<div class="card-note"><i class="ti ti-notes"></i><span class="note-text">${s.note}</span></div>`;
+  }
+
+  h += `<div class="card-footer">
+    <button class="btn ghost btn-history" data-sid="${s.id}"><i class="ti ti-history"></i>Histórico</button>
+    <button class="btn ghost btn-note" data-sid="${s.id}"><i class="ti ti-notes"></i>${s.note ? 'Editar nota' : 'Anotação'}</button>
+    <div style="flex:1"></div>
+    <div class="link-chip"><i class="ti ti-link" style="font-size:13px;flex-shrink:0;color:var(--text3)"></i><code>${link}</code></div>
+    <button class="btn sm btn-copy-link" data-link="${link}" title="Copiar link"><i class="ti ti-copy"></i></button>
+    <button class="btn sm danger btn-del" data-sid="${s.id}" title="Excluir"><i class="ti ti-trash"></i></button>
+  </div></div>`;
+  return h;
+}
+
+function renderNew() {
+  return `<div class="form-card">
+    <h3>Nova venda parcelada</h3>
+    <div class="fg"><label>Item vendido *</label><input id="fn-item" placeholder="ex: Notebook Dell Inspiron 15"></div>
+    <div class="fg"><label>Nome do comprador *</label><input id="fn-buyer" placeholder="ex: João Silva"></div>
+    <div class="fg"><label>Foto do item (opcional)</label>
+      <div class="upload-area" id="new-upload-area">
+        <input type="file" accept="image/*" id="new-img-input">
+        <img id="new-img-preview" class="upload-preview">
+        <div id="new-upload-label"><i class="ti ti-photo-plus"></i>Clique para adicionar foto</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Valor total (R$) *</label><input id="fn-total" type="number" placeholder="800,00" min="1" step="0.01"></div>
+      <div class="fg"><label>Nº de parcelas *</label><input id="fn-n" type="number" placeholder="3" min="1" max="60"></div>
+    </div>
+    <div class="fg"><label>Vencimento 1ª parcela *</label><input id="fn-date" type="date" value="${today()}"></div>
+    <div class="fg"><label>Anotação (opcional)</label><textarea id="fn-note" placeholder="Observações sobre a venda..." style="min-height:70px;resize:vertical"></textarea></div>
+    <div id="fn-preview"></div>
+    <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+      <button class="btn primary" id="fn-save"><i class="ti ti-device-floppy"></i>Salvar venda</button>
+      <button class="btn" id="fn-calc"><i class="ti ti-calculator"></i>Calcular parcelas</button>
+    </div>
+  </div></div>`;
+}
+
+function renderConfig() {
+  return `<div class="config-card">
+    <h3>Sua chave Pix</h3>
+    <p class="config-sub">A chave aparece para o comprador quando ele abre o link da venda, junto com o valor exato da parcela.</p>
+    <div class="fg"><label>CPF, e-mail, telefone ou chave aleatória</label><input id="pix-input" placeholder="seuemail@gmail.com" value="${pixKey}"></div>
+    <button class="btn primary" id="btn-save-pix"><i class="ti ti-device-floppy"></i>Salvar chave Pix</button>
+  </div></div>`;
+}
+
+function renderModal() {
+  const { type, saleId } = ui.modal;
+  const s = sales.find(x => x.id === saleId);
+  if (!s) return '';
+  if (type === 'history') {
+    const events = s.installments.filter(i => i.paid && i.paidAt).map(i => ({ date: i.paidAt, desc: `Parcela ${i.num} confirmada`, val: i.value })).sort((a, b) => b.date.localeCompare(a.date));
+    return `<div class="modal-wrap" id="modal-wrap">
+      <div class="modal">
+        <div class="modal-hd"><h3>Histórico de pagamentos</h3><button class="btn ghost sm" id="close-modal"><i class="ti ti-x"></i></button></div>
+        <p class="modal-sub">${s.item} · ${s.buyer}</p>
+        ${events.length ? events.map(e => `<div class="hist-row">
+          <div class="hist-dot"><i class="ti ti-circle-check"></i></div>
+          <div class="hist-info"><div class="hist-desc">${e.desc}</div><div class="hist-when">${fmtDate(e.date)}</div></div>
+          <div class="hist-val">${fmt(e.val)}</div>
+        </div>`).join('') : `<div class="empty-hist"><i class="ti ti-history"></i>Nenhum pagamento confirmado ainda</div>`}
+        <div style="margin-top:18px;text-align:right"><button class="btn" id="close-modal2">Fechar</button></div>
+      </div>
+    </div>`;
+  }
+  return '';
+}
+
+function renderBuyer(saleId) {
+  const s = sales.find(x => x.id === saleId);
+  if (!s) return `<div class="buyer-wrap"><div class="empty" style="margin-top:60px"><i class="ti ti-receipt-off"></i><p>Venda não encontrada</p><small>Verifique o link com o vendedor</small></div></div>`;
+  const paid = s.installments.filter(i => i.paid).length;
+  const total = s.installments.length;
+  const pct = Math.round(paid / total * 100);
+  const next = s.installments.find(i => !i.paid);
+  let h = `<div class="buyer-wrap">`;
+  if (s.img) h += `<img src="${s.img}" class="buyer-hero-img" alt="${s.item}">`;
+  h += `<div class="buyer-card">
+    <div style="font-size:13px;color:var(--text2)">Olá, <strong>${s.buyer}</strong>! Suas parcelas:</div>
+    <div style="font-size:19px;font-weight:700;margin-top:6px;letter-spacing:-.02em">${s.item}</div>
+    <div class="prog-bar" style="margin-top:12px"><div class="prog-fill" style="width:${pct}%"></div></div>
+    <div style="font-size:12px;color:var(--text3);text-align:right;margin-top:5px">${paid} de ${total} parcelas pagas</div>
+  </div>`;
+
+  if (next) {
+    h += `<div class="buyer-card highlight">
+      <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:8px">Próxima parcela</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><div style="font-size:14px;color:var(--text2)">Parcela ${next.num}</div><div style="font-size:12px;color:var(--text3)">Vencimento: ${fmtDate(next.date)}</div></div>
+        <div style="font-size:26px;font-weight:700;color:var(--green);letter-spacing:-.02em">${fmt(next.value)}</div>
+      </div>`;
+    if (pixKey) h += `<div class="pix-box">
+      <div style="font-size:11px;color:var(--text3)">Chave Pix do vendedor</div>
+      <div class="pix-key">${pixKey}</div>
+      <div class="pix-amount">${fmt(next.value)}</div>
+      <div class="pix-hint">Envie exatamente este valor e avise o vendedor</div>
+      <button class="btn" id="copy-pix-btn"><i class="ti ti-copy"></i>Copiar chave</button>
+    </div>`;
+    h += `</div>`;
+  } else {
+    h += `<div class="buyer-card" style="text-align:center;padding:28px"><div style="font-size:36px">🎉</div><div style="font-size:16px;font-weight:600;margin-top:8px">Tudo pago!</div><div style="font-size:13px;color:var(--text2);margin-top:4px">Obrigado pela confiança 🤝</div></div>`;
+  }
+
+  h += `<div class="buyer-card">
+    <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:12px">Todas as parcelas</div>
+    ${s.installments.map(i => {
+      const status = i.paid ? 'paid' : isOverdue(i.date) ? 'overdue' : 'pending';
+      const labels = { paid: 'Paga', pending: 'Pendente', overdue: 'Atrasada' };
+      return `<div class="inst-row">
+        <div class="inst-num ${status}">${i.paid ? '<i class="ti ti-check" style="font-size:10px"></i>' : i.num}</div>
+        <span class="inst-val">${fmt(i.value)}</span>
+        <span class="inst-date">${fmtDate(i.date)}</span>
+        <span class="badge ${status}">${labels[status]}</span>
+      </div>`;
+    }).join('')}
+  </div></div>`;
+  return h;
+}
+
+// ── Event Handlers ────────────────────────────────────────────────────────
+function attach() {
+  document.querySelectorAll('.nav-btn').forEach(b => b.addEventListener('click', () => { ui.tab = b.dataset.tab; render(); }));
+
+  // confirm payment
+  document.querySelectorAll('.btn-confirm').forEach(b => b.addEventListener('click', () => {
+    const s = sales.find(x => x.id === b.dataset.sid);
+    const i = s?.installments.find(x => x.num === parseInt(b.dataset.inum));
+    if (!i) return; i.paid = true; i.paidAt = today(); saveSales(); render(); toast(`Parcela ${i.num} confirmada!`);
+  }));
+
+  // history
+  document.querySelectorAll('.btn-history').forEach(b => b.addEventListener('click', () => { ui.modal = { type: 'history', saleId: b.dataset.sid }; render(); }));
+  ['close-modal','close-modal2'].forEach(id => document.getElementById(id)?.addEventListener('click', () => { ui.modal = null; render(); }));
+  document.getElementById('modal-wrap')?.addEventListener('click', e => { if (e.target.id === 'modal-wrap') { ui.modal = null; render(); } });
+
+  // note
+  document.querySelectorAll('.btn-note').forEach(b => b.addEventListener('click', () => { ui.editNote = b.dataset.sid; render(); }));
+  document.querySelectorAll('.btn-save-note').forEach(b => b.addEventListener('click', () => {
+    const s = sales.find(x => x.id === b.dataset.sid); if (!s) return;
+    s.note = document.getElementById('note-ta').value.trim(); ui.editNote = null; saveSales(); render(); toast('Nota salva!');
+  }));
+  document.querySelectorAll('.btn-cancel-note').forEach(b => b.addEventListener('click', () => { ui.editNote = null; render(); }));
+
+  // copy link
+  document.querySelectorAll('.btn-copy-link').forEach(b => b.addEventListener('click', () => {
+    navigator.clipboard.writeText(b.dataset.link).then(() => toast('Link copiado!')).catch(() => { prompt('Copie o link:', b.dataset.link); });
+  }));
+
+  // delete
+  document.querySelectorAll('.btn-del').forEach(b => b.addEventListener('click', () => {
+    if (!confirm('Excluir esta venda? Esta ação não pode ser desfeita.')) return;
+    sales = sales.filter(s => s.id !== b.dataset.sid); saveSales(); render(); toast('Venda removida', true);
+  }));
+
+  // image upload on existing cards
+  document.querySelectorAll('.img-file-input').forEach(inp => inp.addEventListener('change', e => {
+    const file = e.target.files[0]; if (!file) return;
+    const r = new FileReader(); r.onload = ev => {
+      const s = sales.find(x => x.id === inp.dataset.sid); if (!s) return;
+      s.img = ev.target.result; saveSales(); render(); toast('Foto atualizada!');
+    }; r.readAsDataURL(file);
+  }));
+
+  // new sale form
+  if (ui.tab === 'new') {
+    const newImgInput = document.getElementById('new-img-input');
+    const newImgPreview = document.getElementById('new-img-preview');
+    const newUploadLabel = document.getElementById('new-upload-label');
+    if (ui.newImg && newImgPreview) { newImgPreview.src = ui.newImg; newImgPreview.style.display = 'block'; if (newUploadLabel) newUploadLabel.style.display = 'none'; }
+    newImgInput?.addEventListener('change', e => {
+      const file = e.target.files[0]; if (!file) return;
+      const r = new FileReader(); r.onload = ev => {
+        ui.newImg = ev.target.result;
+        if (newImgPreview) { newImgPreview.src = ev.target.result; newImgPreview.style.display = 'block'; }
+        if (newUploadLabel) newUploadLabel.style.display = 'none';
+      }; r.readAsDataURL(file);
+    });
+
+    function calcPreview() {
+      const total = parseFloat(document.getElementById('fn-total')?.value || 0);
+      const n = parseInt(document.getElementById('fn-n')?.value || 0);
+      const date = document.getElementById('fn-date')?.value || today();
+      const prev = document.getElementById('fn-preview'); if (!prev) return;
+      if (total > 0 && n > 0) {
+        const insts = calcInsts(total, n, date);
+        prev.innerHTML = `<div class="inst-preview">${insts.map(i => `<div class="ipr"><span>Parcela ${i.num} · ${fmtDate(i.date)}</span><span>${fmt(i.value)}</span></div>`).join('')}</div>`;
+      } else prev.innerHTML = '';
+    }
+    ['fn-total','fn-n','fn-date'].forEach(id => document.getElementById(id)?.addEventListener('input', calcPreview));
+    document.getElementById('fn-calc')?.addEventListener('click', calcPreview);
+    document.getElementById('fn-save')?.addEventListener('click', () => {
+      const item = document.getElementById('fn-item').value.trim();
+      const buyer = document.getElementById('fn-buyer').value.trim();
+      const total = parseFloat(document.getElementById('fn-total').value);
+      const n = parseInt(document.getElementById('fn-n').value);
+      const date = document.getElementById('fn-date').value;
+      const note = document.getElementById('fn-note').value.trim();
+      if (!item || !buyer || !total || !n || !date) { toast('Preencha todos os campos obrigatórios', true); return; }
+      sales.unshift({ id: uid(), item, buyer, img: ui.newImg || null, note: note || null, installments: calcInsts(total, n, date), createdAt: today() });
+      ui.newImg = null; saveSales(); ui.tab = 'sales'; render(); toast('Venda registrada!');
+    });
+  }
+
+  if (ui.tab === 'config') {
+    document.getElementById('btn-save-pix')?.addEventListener('click', () => {
+      pixKey = document.getElementById('pix-input').value.trim(); DB.set('pixKey', pixKey); toast('Chave Pix salva!');
+    });
+  }
+}
+
+function attachBuyer() {
+  document.getElementById('copy-pix-btn')?.addEventListener('click', () => {
+    navigator.clipboard.writeText(pixKey).then(() => toast('Chave copiada!')).catch(() => { prompt('Copie a chave Pix:', pixKey); });
+  });
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────
+checkHash();
+render();
+</script>
+</body>
+</html>
